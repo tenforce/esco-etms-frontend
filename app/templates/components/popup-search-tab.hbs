@@ -1,0 +1,46 @@
+<div class="section">
+  <input type="search" autofocus=true value= {{filter}} placeholder="Search / filter" onkeyup= {{action "textContentModified"}} />
+  {{#if searchLoading}}
+    <div class='results'>
+      <ul>
+        <li>
+          <div class="loading">
+            <i class="fa fa-circle-o-notch fa-spin"></i>
+          </div>
+        </li>
+      </ul>
+    </div>
+  {{/if}}
+
+  {{#if searchDone}}
+    <div class='results'>
+      {{#if (gt numberOfResults 0)}}
+        {{#multiselect-checkboxes options=searchResults selection=clickedResults as |result isSelected|}}
+          <li class="{{if (and (not mergeAllowDeprecatedSearch) (and result.disableEditingInSearchResults concept.isDeprecated)) 'not-editable'}}" title="{{if result.disableEditingInSearchResults 'This concept is not editable.'}}">
+            {{#if allowMultiSelect}}
+              <span class="checkbox">
+                {{input type="checkbox" checked=isSelected name=(concat "cb-name-" result.id) disabled=result.disableEditingInSearchResults}}
+                <label for="{{ concat 'cb-name-' result.id}}"></label>
+              </span>
+            {{/if}}
+            <button {{action 'listItemClick' result}} disabled= {{and (not mergeAllowDeprecatedSearch) (and result.disableEditingInSearchResults concept.isDeprecated)}}>
+              {{#if (is-pending result.defaultPrefLabel)}}
+                <i class="fa fa-circle-o-notch fa-spin"></i>
+              {{else}}
+                {{#if result.defaultCode}}{{result.defaultCode}} - {{/if}}{{await result.defaultPrefLabel}}
+              {{/if}}
+              </button>
+          </li>
+        {{/multiselect-checkboxes}}
+      {{else}}
+        <ul>
+          <li class="no-results">No results found.</li>
+        </ul>
+      {{/if}}
+    </div>
+  {{/if}}
+
+  {{#if hasSelectedResults}}
+    <button type="button" name="button" class="popup-save-button" {{action 'saveElements'}}>Save</button>
+  {{/if}}
+</div>

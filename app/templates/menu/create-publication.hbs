@@ -1,0 +1,47 @@
+<div class="header">
+    <h1>Create a publication</h1>
+</div>
+<!-- /.header -->
+
+<div class="body">
+  {{#if errorMessage}}
+      <div class="feedback feedback--error">
+          <i class="fa fa-exclamation-triangle"></i> {{errorMessage}}
+      </div>
+  {{/if}}
+    <div class="section">
+        <div class="section__title">Name</div>
+        <div class="section__body">
+          {{input type="text" value=publicationName size="50" placeholder="v0.9"}}
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section__title">Publication date (optional)</div>
+        <div class="section__body">
+          {{pikaday-input format="DD/MM/YYYY" value=publicationDate}}
+        </div>
+    </div>
+    <div class="section">
+        <p>The created publication will include:</p>
+        <ul>
+            <li>all occupations that have status "ready for publication", "published", "ready for deprecation" or
+                "deprecated"
+            </li>
+            <li>all skills that have status "ready for publication", "published", "ready for deprecation" or
+                "deprecated"
+            </li>
+            <li>all concepts from the supporting taxonomies</li>
+            <li>all labels linked to the above concepts</li>
+            <li>all relationship objects that exists between the above concepts</li>
+        </ul>
+    </div>
+</div>
+<!-- /.body -->
+
+<div class="footer">
+    <div class="actions">
+        <button class="btn" {{action 'createPublication'}}>Create publication</button>
+    </div>
+</div>
+<!-- /.footer -->

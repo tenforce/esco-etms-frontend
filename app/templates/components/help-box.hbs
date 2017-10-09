@@ -1,0 +1,13 @@
+
+<div class="tab-selector">
+    <ul>
+        {{#each tabs as |tab|}}
+          <li class="{{if (eq selectedTab tab) "selected"}}" {{action "selectTab" tab}}>{{tab.label}}</li>
+        {{/each}}
+    </ul>
+</div>
+<div class="help-body">
+    {{#if selectedTab}}
+        {{component selectedTab.component}}
+    {{/if}}
+</div><!-- ./help-body -->

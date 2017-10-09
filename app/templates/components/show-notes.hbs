@@ -1,0 +1,11 @@
+<div class="notes">
+  <button type="button" name="showNotes" id="showNotes" {{action 'toggleNotes' }} title="View notes for this concept"></button>
+
+  {{#if displayNotes}}
+    {{#tether-dialog close='toggleNotes' hasOverlay=true target='#showNotes' targetAttachment='bottom middle' attachment='top right' container-class="notes-dialog"}}
+        <div class="note-dialog">
+            <textarea onkeyup= {{action "textContentModified"}} name="note" autofocus="autofocus" id="newNoteInput" placeholder="Please insert your note. " value= {{note}}></textarea>
+        </div>
+    {{/tether-dialog}}
+  {{/if}}
+</div>

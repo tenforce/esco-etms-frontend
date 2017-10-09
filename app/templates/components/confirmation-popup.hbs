@@ -1,0 +1,13 @@
+<div class="confirm--popup">
+  <div class='popup'>
+    <div class="popup-bg-white"></div>
+    <div class="popup-bg-gray"></div>
+    {{#tether-dialog close="cancel" container-class="ember-modal-dialog-confirm" hasOverlay=true clickOutsideToClose=true renderInPlace=false}}
+      <div class="body">{{yield}}</div>
+      <div class="actions">
+        <button type="button" class="confirm" {{action 'confirm'}} disabled={{disabled}}>{{confirmButton}}</button>
+        <button type="button" class="cancel" {{action 'cancel'}}>Cancel</button>
+      </div>
+    {{/tether-dialog}}
+  </div>
+</div>

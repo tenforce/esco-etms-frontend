@@ -1,0 +1,11 @@
+{{#if selectedStatus}}
+  {{#unless isDeprecated}}
+    {{#unless isDeleted}}
+      <div class= {{statusForCss}} title="Click to change the concept's status">
+        {{#power-select options=(await statusLabels) searchEnabled=false selected=selectedStatus onchange=(action "selectStatus") as |status|}}
+          {{status.label}}
+        {{/power-select}}
+      </div>
+    {{/unless}}
+  {{/unless}}
+{{/if}}

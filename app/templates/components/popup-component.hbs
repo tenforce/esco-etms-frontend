@@ -1,0 +1,23 @@
+{{! TODO is buttonId needed? This param is set throughout the code and it's noisy}}
+{{#unless (and disableCreate disableSearch)}}
+  <button type="button" class={{buttonClasses}} id={{buttonId}} {{action 'togglePopup'}}>
+    {{#if buttonText}}
+      {{buttonText}}
+    {{/if}}
+  </button>
+{{/unless}}
+
+
+{{#if displayPopup}}
+  <div class='popup'>
+    <div class="popup-bg-white"></div>
+    <div class="popup-bg-gray"></div>
+    {{#tether-dialog close="togglePopup" container-class="popup-modal" hasOverlay=false clickOutsideToClose=true renderInPlace=true}}
+      <div class="header">Link to{{#unless disableCreate}} or <button class="btn" {{action 'createClicked'}}>Create new</button>{{/unless}}</div>
+      {{popup-search-tab
+        conceptScheme=conceptScheme concept=concept saveAllElements=(action 'saveAllElements') createClicked='createClicked'
+        cancelCreate=(action 'cancelCreate') presetBroader=presetBroader
+        searchFilter=searchFilter allowMultiSelect=allowMultiSelect mergeFunctionalityFlag=mergeFunctionalityFlag}}
+    {{/tether-dialog}}
+  </div>
+{{/if}}

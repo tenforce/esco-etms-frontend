@@ -1,0 +1,17 @@
+<div class="section__subtitle">
+  <h3>{{title}}</h3>
+</div>
+<ul class="tags">
+  {{#each (await labels) as |item|}}
+    <li>
+      {{item.literalForm}}
+      {{#if item.genders}}
+      <span class='gender'>
+         - {{item.genders}}
+      </span>
+      {{/if}}
+    </li>
+    {{else}}
+      <p class="msg msg--empty msg--no-preline">There are no labels with this relation.</p>
+  {{/each}}
+</ul>

@@ -1,0 +1,54 @@
+<td>
+  {{#if publication.download}}
+    <a href="" title="download" {{action 'download'}}>
+        {{publication.name}}
+      </a>
+  {{else}}
+    {{publication.name}}
+  {{/if}}
+</td>
+<td>
+  {{#if publication.running}}
+    <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true" {{action 'refresh' publication}}></i>
+  {{/if}}
+  {{publication.status}}
+</td>
+<td>{{custom-format-date publication.issued format="YYYY-MM-DD"}}</td>
+<td>{{custom-format-date publication.created format="YYYY-MM-DD HH:mm:ss"}}</td>
+<td>{{custom-format-date publication.modified format="YYYY-MM-DD HH:mm:ss"}}</td>
+<td class="center">
+  {{#unless publication.running}}
+    <button disabled={{disabled}} class="btn btn--medium {{if selectedFrom "checked"}}" {{action 'toggleDiff' 'From'}}></button>
+  {{/unless}}
+</td>
+<td class="center">
+  {{#unless publication.running}}
+    <button disabled={{disabled}} class="btn btn--medium {{if selectedTo "checked"}}" {{action 'toggleDiff' 'To'}}></button>
+  {{/unless}}
+</td>
+<td class="actions">
+  {{#if publication.deletable}}
+    {{#unless disabled}}
+      <a href="" {{action 'delete'}} title="Delete">
+            <i class="fa fa-trash" aria-hidden="true"/></a>
+    {{else}}
+      <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+    {{/unless}}
+  {{/if}}
+</td>
+
+<td class="actions">
+  {{#if publication.done}}
+    {{#unless disabled}}
+      {{#link-to 'menu.officialize-publication' publication}}<i class="fa fa-certificate" aria-hidden="true" title="Mark official"></i>{{/link-to}}
+    {{else}}
+      <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+    {{/unless}}
+  {{/if}}
+</td>
+
+<td class="actions">
+  {{#if publication.download}}
+    <a href="" {{action 'download'}} title="Download"><i class="fa fa-download" aria-hidden="true"/></a>
+  {{/if}}
+</td>

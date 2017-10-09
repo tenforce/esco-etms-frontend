@@ -1,0 +1,22 @@
+<ul class="tags nace">
+  {{#each (await element) as |item|}}
+    <li>
+      {{#if (is-pending item.defaultPrefLabel)}}
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+      {{else}}
+        {{#if item.defaultCode}}{{item.defaultCode}} - {{/if}}{{await item.defaultPrefLabel}}
+      {{/if}}
+      {{#unless concept.disableEditing}}
+        <button type="button" name="button" class='delete' {{action 'deleteRelation' item}}>
+        </button>
+      {{/unless}}
+    </li>
+  {{else}}
+    <p class="msg msg--empty msg--no-preline">
+      There are no NACE codes added to this concept.
+    </p>
+  {{/each}}
+</ul>
+{{#unless concept.disableEditing}}
+  {{popup-component buttonId="NACE" conceptScheme=conceptScheme saveAllElements=(action 'saveAllElements') disableCreate=true concept=concept}}
+{{/unless}}

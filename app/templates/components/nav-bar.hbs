@@ -1,0 +1,45 @@
+<div class="left">
+  {{#link-to 'index' tabIndex=-1}}
+    <div class="logo" id="logo">
+      <img src="assets/logo.png" alt="esco logo">
+    </div>
+    <div class="title">
+      <h2>ETMS</h2>
+    </div>
+  {{/link-to}}
+</div>
+<div class="right">
+  <div class="dropdowns">
+    <div class="notifications">
+      {{display-notifications user=user loadingPlaceholder=loadingPlaceholder handleClick="handleClick" targetAttachment='bottom left' attachment='top right'}}
+    </div>
+    <div class="user-nav">
+      <a {{action 'toggleMenu'}} class="user-nav-btn {{if menuClosed "closed"}}" title="View user settings">
+        <span class="avatar"></span>
+      </a>
+      <ul class="{{if menuClosed "closed"}}">
+        {{#if session.isAuthenticated}}
+          <span {{action 'closeMenu'}}>{{#link-to 'menu.profile' tagName="li"}}Profile{{/link-to}}</span>{{!-- TODO don't show when not logged in --}}
+          {{#if allowedOnBookmarks}}
+            <span {{action 'closeMenu'}}>{{#link-to 'menu.bookmarks' tagName="li"}}Favourites{{/link-to}}</span>
+          {{/if}}
+          {{#if allowedOnNotifications}}
+            <span {{action 'closeMenu'}}>{{#link-to 'menu.notifications' 'list'  tagName="li"}}Notifications{{/link-to}}</span>
+          {{/if}}
+          {{#if allowedOnValidation}}
+            <span {{action 'closeMenu'}}>{{#link-to 'menu.validation' tagName="li"}}Validate{{/link-to}}</span>
+          {{/if}}
+          {{#if allowedOnDashboard}}
+            <span {{action 'closeMenu'}}>{{#link-to 'menu.dashboard' 'occupations' tagName="li"}}Dashboard{{/link-to}}</span>
+          {{/if}}
+          {{#if allowedOnPublish}}
+            <span {{action 'closeMenu'}}>{{#link-to 'menu.publications' tagName="li"}}Publications{{/link-to}}</span>
+          {{/if}}
+          <span class="logout-button">{{ecas-logout tagName="li"}}</span>
+        {{else}}
+          <span {{action 'closeMenu'}}>{{#link-to 'sign-in' tagName="li"}}Sign in{{/link-to}}</span>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="header">
+    <h1>Publications</h1>
+
+    <div class="actions">
+      {{#link-to "menu.create-publication" elementName="button" class="btn btn--medium btn--show-note"}}
+          Create new publication
+      {{/link-to}}
+      {{#if loading}}
+        <button class="btn btn--medium btn--show-note" disabled="disabled"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></button>
+      {{else}}
+        <button class="btn btn--medium btn--show-note" {{action 'goToDiff'}} disabled="{{if diffable "" "disabled" }}">Save diff</button>
+      {{/if}}
+    </div>
+</div>
+
+<div class="body has-table-only">
+    <div class="table">
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Publication date</th>
+                <th>Created</th>
+                <th>Modified</th>
+                <th>Compare from</th>
+                <th>Compare to</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each sortedModel as |publication|}}
+                {{publication-list-item disabled=loading publication=publication diffTo=diffTo diffFrom=diffFrom selectPublication=(action 'selectPublication')}}
+            {{else}}
+                <div class="msg msg--empty">There are no publications</div>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div><!-- /.body -->

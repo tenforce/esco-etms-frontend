@@ -1,0 +1,29 @@
+
+# DEPRECATED
+
+<div class="feedback">
+  {{#if error}}
+      <div class="error"><i class="fa fa-exclamation-triangle"></i>Failed to import</div>
+  {{/if}}
+  {{#if success}}
+      <div class="success"><i class="fa fa-upload"></i>Successfully imported</div>
+  {{/if}}
+</div>
+<form class="form admin import" {{action 'submitFile' on="submit"}}>
+    <div class="section">
+        <div class="title">Select a SKOS-XL taxonomy</div>
+        <div class="values">
+            <input type="file" onchange={{action "setFile"}}/>
+        </div>
+        <div class="values checkbox">
+            <label>{{input type="checkbox" name="isIncremental" checked=isIncremental}} Incremental Import</label>
+        </div>
+    </div>
+    <button class="btn btn-submit" disabled={{loading}}>
+        {{#if loading}}
+            <i class="fa fa-spinner fa-pulse"></i>
+        {{else}}
+            save
+        {{/if}}
+    </button>
+</form>

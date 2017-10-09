@@ -1,0 +1,62 @@
+<div class="right">
+    {{#unless chosenType}}
+      <div class="concept-pre-state">
+        <span>Choose your type of concept:</span>
+        {{#power-select options=creationConceptOptions searchEnabled=false selected=chosenType disabled=disableSelector placeholder="Choose Type" onchange=(action "selectType") as |selected|}}
+          {{selected.label}}
+        {{/power-select}}
+      </div>
+    {{else}}
+      <div class="concept-pre-state">
+        <span>{{{displayedContextMessage}}}</span>
+      </div>
+    {{/unless}}
+
+    <div class="concept-create-container">
+      {{#if chosenType}}
+        {{#unless updatingConceptType}}
+          <div class="concept">
+            {{#concept-display object=newConcept}}
+                {{#concept-sections}}
+                  {{#concept-section title="Details" collapsed=false collapsable=false}}
+                    {{#if model.isSkill}}
+                      {{#concept-subsection title="KSC type" }}
+                        {{skill-type-selector model=model disabledSelect=disableSwitchSkillType showActions=false saveSkillType="saveSkillType"}}
+                      {{/concept-subsection}}
+                    {{/if}}
+                    {{#if model.isSkill}}
+                      {{#concept-subsection title="Reuse level" }}
+                        {{skill-reuse-level-selector model=model showActions=false saveSkillReuseLevel="saveSkillReuseLevel"}}
+                      {{/concept-subsection}}
+                    {{/if}}
+                    {{#concept-subsection title="Description"}}
+                      {{concept-simple-textarea object=model reference="defaultDescription" saveValue=(action "saveValue" "defaultDescription" "description") showActions=false}}
+                    {{/concept-subsection}}
+                    {{#concept-subsection title="Definition"}}
+                      {{concept-simple-textarea object=model reference="defaultDefinition" saveValue=(action "saveValue" "defaultDefinition" "definition") showActions=false}}
+                    {{/concept-subsection}}
+                    {{#concept-subsection title="Scope note"}}
+                      {{concept-simple-textarea object=model reference="defaultScopeNote" saveValue=(action "saveValue" "defaultScopeNote" "scope note") showActions=false}}
+                    {{/concept-subsection}}
+                  {{/concept-section}}
+
+                  {{#concept-section title="Terms"  collapsed=false collapsable=false}}
+                    {{wrapper-new-concept-terms-manager model=newConcept removeTerm="removeTerm" addTerm="addTerm"}}
+                  {{/concept-section}}
+
+                  {{#concept-section title="Hierarchy" collapsed=false collapsable=false}}
+                    {{show-hierarchy object=newConcept saveAfterAddingBroader=false saveAfterAddingNarrower=false disableCreate=true disableEditingBroader=disableEditingBroader presetBroader=presetBroader presetNarrower=presetNarrower}}
+                  {{/concept-section}}
+                {{/concept-sections}}
+            {{/concept-display}}
+          </div>
+        {{/unless}}
+      {{/if}}
+
+      <div class="actions actions--create-concept">
+        <button type="button" class="save" {{action 'saveClicked'}} disabled= {{not chosenType}} title='Save creation'>Create</button>
+        <button type="button" class="cancel" {{action 'cancelClicked'}} title='Cancel creation'>Cancel</button>
+      </div>
+
+    </div>
+</div>

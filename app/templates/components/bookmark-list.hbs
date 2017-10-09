@@ -1,0 +1,40 @@
+<div class="header">
+    <h1>Favourites</h1>
+</div><!-- /.header -->
+
+<div class="body has-table-only">
+    {{#if (await emptyBookmarks)}}
+        <div class="msg msg--empty">There are no favourites</div>
+    {{else}}
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Concept</th>
+                        <th>Type</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each bookmarks as |b|}}
+                        {{#if b.id}}
+                            <tr>
+                                <td>{{custom-format-date b.bookmarkDate format="YYYY/MM/DD"}}</td>
+                                <td>
+                                    {{#link-to "concepts.show" (await b.bookmarkConcept.conceptSchemeId) b.bookmarkConcept.id  tagName='a' }}
+                                        {{await b.bookmarkConcept.defaultPrefLabel}}
+                                    {{/link-to}}
+                                </td>
+                                <td>{{await b.bookmarkConcept.conceptTypeString}}</td>
+                                <td class="actions">
+                                    <i {{action 'delete' b}} class="delete ease" title='Remove from favourites'></i>
+                                </td>
+                            </tr>
+                        {{/if}}
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    {{/if}}
+</div><!-- /.body -->

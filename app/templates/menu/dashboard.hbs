@@ -1,0 +1,61 @@
+{{!-- {{admin-menu showDashboardSubmenu=true}} --}}
+
+<div class="header">
+    <h1>KPI dashboard</h1>
+
+    <div class="actions">
+        <button class="btn btn--small" {{action "refresh" false}} title="Fetch the last cached version of the indicators">Refresh</button>
+
+        {{#if userIsAdmin}}
+            <button class="btn btn--small" {{action "refresh" true}} title="Bypass the cache and force refresh the indicators">Force refresh</button>
+        {{/if}}
+    </div>
+</div><!-- /.header -->
+
+<div class="body">
+    <div class="section intro">
+        <p>These indicators are cached and might not always show the latest changes in the data.</p>
+
+        {{#if userIsAdmin}}
+            <p>However, as an admin, you can bypass the cache and fetch the latest changes.</p>
+        {{/if}}
+    </div>
+
+    {{#if (eq display "occupations")}}
+        <div class="section total">
+            <span>Number of concepts in the 'Occupations' scheme : {{totalOccupations}}</span>
+        </div>
+
+        <div class="section chart">
+            {{plotly-chart data=iscoGroups title="Repartition of concepts in the 'Occupation' concept scheme according to their group" annotations=iscoGroupsAnnotation}}
+        </div>
+
+        <div class="section chart">
+            {{plotly-chart data=occupationsStatus title="Status repartition for 'Occupation' concepts" annotations=occupationsStatusAnnotation}}
+        </div>
+    {{else if (eq display "skills")}}
+        <div class="section total">
+            <span>Number of concepts of type 'Skills' in the 'Skills' scheme : {{totalSkills}}</span>
+        </div>
+
+        <div class="section total">
+            <span>Number of concepts of type 'Knowledge' in the 'Skills' scheme : {{totalKnowledges}}</span>
+        </div>
+
+        <div class="section chart">
+            {{plotly-chart data=skillGroups title="Repartition of skills in the 'Skill' concept scheme according to their group" annotations=skillGroupsAnnotation}}
+        </div>
+
+        <div class="section chart">
+            {{plotly-chart data=knowledgeGroups title="Repartition of knowledges in the 'Skills' concept scheme according to their group" annotations=knowledgeGroupsAnnotation}}
+        </div>
+
+        <div class="section chart">
+            {{plotly-chart data=skillsStatus title="Status repartition for 'Skill' concepts" annotations=skillsStatusAnnotation}}
+        </div>
+
+        <div class="section chart">
+            {{plotly-chart data=knowledgesStatus title="Status repartition for 'Knowledge' concepts" annotations=knowledgesStatusAnnotation}}
+        </div>
+    {{/if}}
+</div><!-- /.body -->

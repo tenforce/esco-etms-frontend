@@ -1,0 +1,31 @@
+<div class="section__subtitle">
+  <h3>{{title}}</h3>
+</div>
+<div class='skills'>
+  {{#if (is-pending inverseRelationsToDisplay) }}
+    <div class="loading">
+      <i class="fa fa-circle-o-notch fa-spin"></i>
+    </div>
+  {{else}}
+    <ul class="tags skills">
+      {{#each (await inverseRelationsToDisplay) as |ir|}}
+        <li>
+          {{#link-to "concepts.show" conceptScheme ir.id}}
+            {{await ir.defaultPrefLabel}}
+          {{/link-to}}
+          {{#if editable}}
+            <button type="button" name="button" class='delete' {{action 'deleteRelation' ir}}>
+            </button>
+          {{/if}}
+        </li>
+      {{else}}
+        <p class="msg msg--empty msg--no-preline">
+          There are no inverse relations.
+        </p>
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>
+{{#if editable}}
+  {{popup-component buttonId='InverseRelations' conceptScheme=conceptScheme saveAllElements=(action 'saveAllElements') searchFilter=searchFilter concept=concept creationConceptOptions=creationConceptOptions transitionToCreate="transitionToCreate"}}
+{{/if}}

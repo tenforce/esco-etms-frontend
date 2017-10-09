@@ -1,0 +1,12 @@
+.dockerignore
+.git
+Dockerfile
+node_modules
+bower_components
+dist
+tmp
+*.log
+vendor
+coverage
+test
+dev.sh

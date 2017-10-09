@@ -1,0 +1,18 @@
+<div class="form set-language">
+  <h1>Please select the type of export you want to make ('Occupations' or 'Skills').</h1>
+    {{#power-select options=exportOptions searchField="title" selected=exportType onchange=(action "setExportType") as |exportType|}}
+      {{exportType.title}}
+    {{/power-select}}
+
+    <h1>Please select the language in which you want to export the CSV file.</h1>
+    <form {{action "export" on="submit"}}>
+        {{language-selector setLanguage="setLanguage" languageOptions=languageOptions language=language}}
+  {{#if loading}}
+      <i class="fa fa-spinner fa-pulse"></i>
+  {{else}}
+      <button {{action "makeExport"}}>Export</button>
+  {{/if}}
+    </form>
+</div>
+
+<a class="downloadlocation" download="export.csv" style="left:-1000000; top:-1000000;" href="">v</a>

@@ -1,0 +1,20 @@
+{{#if (is-pending members)}}
+  <i class="fa fa-circle-o-notch fa-spin"></i>
+{{else}}
+  {{#power-select options=members disabled=disabledSelect searchEnabled=false selected=selectedType onchange=(action "selectType") as |member|}}
+    {{await member.localizedPrefLabel}}
+  {{/power-select}}
+
+  {{#if showActions}}
+    {{#if model.skillTypeConceptSaving}}
+      <div class="actions">
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+      </div>
+    {{else if dirty}}
+      <div class="actions">
+        <button type="button" tabindex=-1 class="save" title="Save" {{action 'saveSkillType'}} disabled={{disabled}}></button>
+        <button type="button" tabindex=-1 class="cancel" title="Reset" {{action 'rollbackSkillType'}} disabled={{disabled}}></button>
+      </div>
+    {{/if}}
+  {{/if}}
+{{/if}}

@@ -1,0 +1,43 @@
+{{#power-select options=conceptOptions searchEnabled=false selected=chosenType disabled=disableSelector placeholder="Choose Type" onchange=(action "selectType") as |selected|}}
+  {{selected.label}}
+{{/power-select}}
+
+{{#if chosenType}}
+    <div class="concept">
+      {{#concept-display object=newConcept}}
+        {{#if conceptCreated}}
+          {{#concept-sections}}
+            {{#concept-section title="Details" collapsed=false}}
+              {{#concept-subsection title="Description"}}
+                {{concept-textarea object=newConcept reference="defaultDescription"}}
+              {{/concept-subsection}}
+              {{#concept-subsection title="Definition"}}
+                {{concept-textarea object=newConcept reference="defaultDefinition"}}
+              {{/concept-subsection}}
+              {{#concept-subsection title="Scope note"}}
+                {{concept-textarea object=newConcept reference="defaultScopeNote"}}
+              {{/concept-subsection}}
+            {{/concept-section}}
+
+            {{#concept-section title="Terms" collapsed=false}}
+              {{wrapper-new-concept-terms-manager model=newConcept}}
+            {{/concept-section}}
+
+            {{#concept-section title="Hierarchy" collapsed=false}}
+              {{show-hierarchy object=newConcept disableCreate=true presetBroader=presetBroader presetNarrower=presetNarrower}}
+            {{/concept-section}}
+            {{#if showSavingError}}
+              <div class="saving-error">
+                A concept can only be created when at least a preferred term and a broader concept are given.
+              </div>
+            {{/if}}
+          {{/concept-sections}}
+        {{/if}}
+      {{/concept-display}}
+    </div>
+{{/if}}
+
+<div class="actions actions--create-concept">
+  <button type="button" class="save" {{action 'save'}} disabled= {{not chosenType}} title='Save creation'>Create</button>
+  <button type="button" class="cancel" {{action 'cancelCreate'}} title='Cancel creation'>Cancel</button>
+</div>

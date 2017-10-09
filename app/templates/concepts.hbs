@@ -1,0 +1,15 @@
+<div class="left">
+    <div title= {{selectTaxonomyTitle}} class="taxonomy-selector">
+        {{#power-select options=taxonomies selected=selectedTaxonomy disabled=disableTaxonomyChange onchange=(action "selectTaxonomy") as |selected|}}
+            {{selected.label}}
+        {{/power-select}}
+    </div>
+
+    {{#taxonomy-browser taxonomy=model filterTypes=filters activateItem="activateItem" searchPlaceholder="Filter" baseConfig=config disableShortcuts=disableShortcuts addPillarHierarchy=false}}{{/taxonomy-browser}}
+
+    <div class="bottombar">
+      <button class="btn--create-concept" title="Create new concept" {{action "goToCreate" selectedTaxonomy.options}}></button>
+    </div>
+</div>
+
+{{outlet}}

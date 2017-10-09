@@ -1,0 +1,73 @@
+<div class="header">
+    <h1>Notifications</h1>
+</div><!-- /.header -->
+
+<div class="body">
+    {{#if error}}
+        <div class="feedback feedback--error">
+            <i class="fa fa-exclamation-triangle"></i>Failed to create notification
+        </div>
+    {{/if}}
+    {{#if success}}
+        <div class="feedback feedback--success">
+            <i class="fa fa-check"></i>Notification created
+        </div>
+    {{/if}}
+
+    <div class="section">
+        <h2 class="section__master-title">{{titleLabel}}</h2>
+
+        <div class="section__title">Type</div>
+        <div class="section__body">
+            {{#power-select options=notificationTypes selected=notification.notificationType onchange=(action "selectType") as |type|}}
+                {{type}}
+            {{/power-select}}
+        </div>
+
+        <div class="section__title">Purpose</div>
+        <div class="section__body">
+            {{#power-select options=purposeTypes selected=notification.purpose onchange=(action "selectPurpose") as |purpose|}}
+                {{purpose}}
+            {{/power-select}}
+        </div>
+
+        <div class="section__title">{{expirationLabel}}</div>
+        <div class="section__body">
+            {{pikaday-input format="DD/MM/YYYY" value=notification.expirationDate placeholder="Select a date"
+            minDate=minDate onSelection=(action 'selectDate')}}
+        </div>
+
+
+        <div class="section__title">{{messageLabel}}</div>
+        <div class="section__body">
+            {{textarea value=notification.message placeholder="Please insert your message" rows=1}}
+        </div>
+
+        {{#if (eq notification.notificationType "list")}}
+            <div class="section__title">{{listButtonLabel}}</div>
+            <div class="section__body">
+                {{textarea value=notification.listButton placeholder="Please insert your message"}}
+
+                <ul class="related-items">
+                    {{#each notification.list as |relatedItem index|}}
+                        {{notification-related-item relatedItem=relatedItem index=index textContentModified="textContentModified"
+                        removeRelatedItem="removeRelatedItem" allowDelete=true highlight=true}}
+                    {{/each}}
+
+                    {{notification-related-item relatedItem=newRelatedItem index="New" textContentModified="newTextContentModified"
+                    removeRelatedItem="removeNewRelatedItem" allowDelete=false highlight=false}}
+
+                    <button type="button" class="btn add-item" {{action 'increaseRelatedItemField'}}>{{relatedButtonLabel}}</button>
+                </ul>
+            </div>
+        {{/if}}
+    </div>
+</div><!-- /.body -->
+
+<div class="footer">
+    <div class="actions">
+        <button id="notificationSaveButton" type="button" class="btn btn-submit {{if shouldDisableSave 'disabled'}}" {{action 'save'}} disabled={{if shouldDisableSave 'disabled'}}>
+          {{saveButtonLabel}}
+        </button>
+    </div>
+</div><!-- /.footer -->

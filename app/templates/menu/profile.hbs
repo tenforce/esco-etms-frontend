@@ -1,0 +1,53 @@
+<div class="header">
+  <h1>Personal information</h1>
+</div>
+
+<div class="body">
+    {{#if error}}
+        <div class="feedback feedback--error">
+            <i class="fa fa-exclamation-triangle"></i>Failed to update
+        </div>
+    {{/if}}
+    {{#if success}}
+        <div class="feedback feedback--success">
+            <i class="fa fa-check"></i>Profile updated
+        </div>
+    {{/if}}
+
+    <form {{action "updateProfile" on="submit"}}>
+        <div class="section">
+            <div class="section__title">Name</div>
+            <div class="section__body">
+                <div class="row">
+                    <input type="text" placeholder="" value= {{name}} onchange= {{action 'setName' value='target.value'}} />
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section__title">Groups</div>
+            <div class="section__body">
+                <div class="row">
+                    {{userGroupTexts}}
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section__title">Shortcuts</div>
+            <div class="section__body">
+                <div class="row">
+                    <div class="toggle" {{action 'toggleDisableShortcuts'}}>
+                        <i class="fa {{if (eq user.disableShortcuts 'no') 'fa-toggle-off' 'fa-toggle-on'}}"></i>{{disableShortcutsLabel}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      <div class="actions">
+        <button class="btn btn-submit" disabled= {{loading}}>
+          {{#if loading}}<i class="fa fa-spinner fa-pulse"></i>{{else}}Save{{/if}}
+        </button>
+      </div>
+    </form>
+</div><!-- /.body -->

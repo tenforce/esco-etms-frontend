@@ -1,0 +1,145 @@
+<div class="right">
+	{{#if conceptDeprecated}}
+		{{deprecation-component model=model transitionToCreateFromDeprecated="transitionToCreateFromDeprecated"}}
+	{{/if}}
+	{{#if conceptDeleted}}
+		<div class="concept-deleted">
+			<div class="message">
+				<span>This concept is deleted.</span>
+			</div>
+		</div>
+	{{/if}}
+	{{!-- Concepts that the current concept replaces --}}
+	{{#if (await replaces)}}
+		<div class="concept-deprecated">
+			<div class="message">
+				<span><strong>This concept is a replacement for these other concept(s):</strong> </span>
+			</div>
+			<ul class="replacements">
+				{{#each replaces as |replacement|}}
+					<li>
+						{{#link-to "concepts.show" conceptScheme replacement.id}}
+							{{await replacement.label}}
+						{{/link-to}}
+						<button type="button" name="button" class="delete" {{action 'deleteRelation' (await replacement.label)}}></button>
+					</li>
+				{{/each}}
+			</ul>
+			{{popup-component mergeFunctionalityFlag=mergeFunctionalityFlag conceptScheme=conceptScheme saveAllElements=(action 'saveAllElements') buttonText=buttonText buttonClasses="btn btn--small deprecation" concept=model disableCreate=true}}
+		</div>
+	{{/if}}
+
+	{{!-- FIXME put in logic. which css classes here are exclusive?  --}}
+	{{!-- Implement as classNameBindings in concept-display --}}
+	<div class="concept{{if conceptDeprecated ' deprecated'}}{{if conceptDeleted ' deleted'}}{{if model.isSkillSkill ' skill'}}{{if model.isSkillKnowledge ' knowledge'}}{{if model.isOccupation ' occupation'}}">
+		{{#concept-display object=model}}
+			{{#concept-title-bar}}
+				{{concept-bookmark object=model}}
+				{{!FIXME rename object to concept when it's a concept. use position parameters?}}
+				<h1 class="no-edit">{{model.loadedDefaultPrefLabel}}</h1>
+				{{wrapper-concept-status-selector object=model}}
+			{{/concept-title-bar}}
+			{{#concept-sections}}
+				{{#concept-section title="Details" collapsed=false }}
+					{{#if model.isSkill}}
+            {{#concept-subsection title="KSC type" }}
+              {{skill-type-selector model=model saveSkillType="saveSkillType" disabledSelect=model.disableEditing}}
+            {{/concept-subsection}}
+					{{/if}}
+          {{#if model.isSkill}}
+            {{#concept-subsection title="Reuse level" }}
+              {{skill-reuse-level-selector model=model saveSkillReuseLevel="saveSkillReuseLevel" disabledSelect=model.disableEditing}}
+            {{/concept-subsection}}
+          {{/if}}
+
+          {{#concept-subsection title="Description"}}
+						{{concept-simple-textarea object=model showActions=(not model.disableEditing) reference="defaultDescription" saveValue=(action "saveValue" "defaultDescription" "description")}}
+					{{/concept-subsection}}
+					{{#concept-subsection title="Definition"}}
+						{{concept-simple-textarea object=model showActions=(not model.disableEditing) reference="defaultDefinition" saveValue=(action "saveValue" "defaultDefinition" "definition")}}
+					{{/concept-subsection}}
+					{{#concept-subsection title="Scope note"}}
+						{{concept-simple-textarea object=model showActions=(not model.disableEditing) reference="defaultScopeNote" saveValue=(action "saveValue" "defaultScopeNote" "scope note")}}
+					{{/concept-subsection}}
+
+          {{#if (await model.underRegulation)}}
+            {{#concept-subsection title="Regulation"}}
+              {{#if (is-pending model.underRegulation.defaultPrefLabel)}}
+                <p class="loading">
+                  <i class="fa fa-circle-o-notch fa-spin"></i>
+                </p>
+              {{else}}
+                <p class="no-edit">{{await model.underRegulation.defaultPrefLabel}}</p>
+              {{/if}}
+            {{/concept-subsection}}
+          {{/if}}
+          {{#if model.isOccupation}}
+            {{#concept-subsection title="NACE code" }}
+              {{wrapper-nace object=model}}
+            {{/concept-subsection}}
+          {{/if}}
+          {{#if (await model.inferredGroupCode)}}
+            {{#concept-subsection title="Group code" }}
+              <p class="concept-isco-code">{{await model.inferredGroupCode}}</p>
+            {{/concept-subsection}}
+          {{/if}}
+
+				{{/concept-section}}
+
+				{{#concept-section title="Terms" }}
+					{{wrapper-terms-manager object=model}}
+				{{/concept-section}}
+
+				{{#concept-section title="Hierarchy" }}
+					{{show-hierarchy object=model transitionToCreate="transitionToCreateHierarchy"}}
+				{{/concept-section}}
+
+				{{#concept-section title="Essential skills" }}
+					{{wrapper-skills object=model skillRelation='essentialSkills' skillType="http://data.europa.eu/esco/skill-type/skill" transitionToCreate="transitionToCreateEssentialSkills"}}
+				{{/concept-section}}
+
+				{{#concept-section title="Optional skills" }}
+					{{wrapper-skills object=model skillRelation='optionalSkills' skillType="http://data.europa.eu/esco/skill-type/skill" transitionToCreate="transitionToCreateOptionalSkills"}}
+				{{/concept-section}}
+
+				{{#concept-section title="Essential knowledge" }}
+					{{wrapper-skills object=model skillRelation='essentialKnowledges' skillType="http://data.europa.eu/esco/skill-type/knowledge" transitionToCreate="transitionToCreateEssentialKnowledge"}}
+				{{/concept-section}}
+
+				{{#concept-section title="Optional knowledge" }}
+					{{wrapper-skills object=model skillRelation='optionalKnowledges' skillType="http://data.europa.eu/esco/skill-type/knowledge" transitionToCreate="transitionToCreateOptionalKnowledge"}}
+				{{/concept-section}}
+
+				{{#if (not hideInverseRelationsLabel)}} {{!FIXME flip boolean name}}
+					{{#concept-section title="Inverse relations" }}
+						{{show-inverse-relations object=model transitionToCreate="transitionToCreateInverseRelations"}}
+					{{/concept-section}}
+				{{/if}}
+			{{/concept-sections}}
+		{{/concept-display}}
+
+
+
+	</div>
+	<div class="sidebar">
+		<ul>
+			<li>{{comments-wrapper about=model}}</li>
+			<li>{{show-notes concept=model}}</li>
+			<li>{{help-box-wrapper}}</li>
+			{{#unless model.disableEditing}}
+				{{#unless hideDeprecation}}
+					<li><button type="button" class="depr" title="Deprecate concept" {{action 'confirmDeprecation'}} disabled= {{conceptDeprecated}}></button></li>
+				{{/unless}}
+				{{#unless hideDelete}}
+					<li><button type="button" class="del" title="Delete concept" {{action 'confirmDeletion'}}></button></li>
+				{{/unless}}
+				<li><button type="button" class="save-all" title="Save all changes" {{action 'saveAll'}} disabled= {{not dirty}}></button></li>
+			{{/unless}}
+		</ul>
+	</div>
+	{{#if showConfirmationPopup}}
+		{{#confirmation-popup confirmAction=confirmAction confirmButton=confirmButton deprecateConcept=(action 'deprecateConcept') deleteConcept=(action 'deleteConcept') closeConfirmation=(action 'closeConfirmation')}}
+			{{confirmTitle}}
+		{{/confirmation-popup}}
+	{{/if}}
+</div>

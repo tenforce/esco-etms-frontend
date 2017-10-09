@@ -1,0 +1,7 @@
+{{#if (eq display "list")}}
+  {{notifications-list update="update"}}
+{{else if (eq display "create")}}
+  {{notification-component}}
+{{else if (eq display "update")}}
+  {{notification-component notification=selectedNotification transitionToList="transitionToList"}}
+{{/if}}

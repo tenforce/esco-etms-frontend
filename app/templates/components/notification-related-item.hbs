@@ -1,0 +1,7 @@
+<input type="text" class="relatedItem{{if highlight " confirmed"}}" size=50 value= {{relatedItem}} onkeyup= {{action
+"textContentModified" index}} placeholder="Please insert a related item." />
+{{#if allowDelete}}
+  <button class="action remove" {{action 'removeRelatedItem' index}}>
+      <i class="fa fa-minus"></i>
+  </button>
+{{/if}}

@@ -1,0 +1,43 @@
+{{#if object.disableEditing}}
+  {{label-list concept=object title='Title / preferred term' relation='defaultPrefLabels'}}
+  {{label-list concept=object title='Non-preferred terms' relation='defaultAltLabels'}}
+  {{label-list concept=object title='Hidden terms' relation='defaultHiddenLabels'}}
+{{else}}
+  {{#if loading}}
+    <i class="fa fa-spinner fa-pulse"></i>
+  {{else}}
+    {{#terms-list terms=prefTerms roles=(if object.isOccupation roles undefined) name="pref" newTerm=newPrefTerm displayNewTerm=emptyPrefTerms displaySource=false
+    displayNewSource=false displayNewSuggestions=false displayActions=displayActions
+     displaySuggestions=false toggleGender="togglePrefGender"
+    saveTerm="savePrefTerm" saveNewTerm="saveNewPrefTerm" deleteTerm="deleteTerm" rollbackTerm="rollbackTerm" disabled=disableTranslation
+    placeholder=placeholder newPlaceholder=placeholder}}
+      <div class="block-title">
+        {{#if toomanyPrefTerms.display}}
+          <h3>Preferred terms</h3>
+        {{else}}
+          <h3>Preferred term</h3>
+        {{/if}}
+        <i class="fa fa-info-circle" title="Each concept within ESCO has a designated, unique preferred name per ESCO language. Out of a group of terms with similar meaning, the one that best represents the concept is chosen to be the preferred term. The preferred term of a given concept is unique per language and can always be used for cases where the natural gender is not known."></i>
+        {{#if toomanyPrefTerms.display}}<i class="fa fa-exclamation-triangle" title="A concept should only have a single preferred term per language"></i>{{/if}}
+      </div>
+    {{/terms-list}}
+
+    {{#terms-list terms=altTerms roles=(if object.isOccupation roles undefined) name="alt" newTerm=newAltTerm displaySource=false displaySuggestions=false displayNewSource=false displayNewSuggestions=false
+    displayActions=displayActions toggleGender="toggleAltGender" saveTerm="saveAltTerm" saveNewTerm="saveNewAltTerm" deleteTerm="deleteTerm"
+    rollbackTerm="rollbackTerm" disabled=disableTranslation placeholder=placeholder newPlaceholder=placeholder}}
+      <div class="block-title">
+        <h3>Non-preferred terms</h3>
+        <i class="fa fa-info-circle" title="Non-preferred terms can be synonyms (words with similar or same meanings) but can also be spelling variants, declensions, abbreviations, etc. They are regularly used by the target group (jobseekers, employers, education institutions) to refer to concepts that are described in ESCO with the preferred term."></i>
+      </div>
+    {{/terms-list}}
+
+    {{#terms-list terms=hiddenTerms roles=undefined name="hidden" newTerm=newHiddenTerm displaySource=false displaySuggestions=false displayNewSource=false displayNewSuggestions=false
+    displayActions=displayActions toggleGender="toggleHiddenGender" saveTerm="saveHiddenTerm" saveNewTerm="saveNewHiddenTerm"
+    deleteTerm="deleteTerm" rollbackTerm="rollbackTerm" disabled=disableTranslation placeholder=placeholder newPlaceholder=placeholder}}
+      <div class="block-title">
+        <h3>Hidden terms</h3>
+        <i class="fa fa-info-circle" title="Hidden terms are commonly used on the labour market to refer to a concept but are at the same time considered as outdated, misspelled or politically incorrect. Therefore, they are invisible for the end-user."></i>
+      </div>
+    {{/terms-list}}
+  {{/if}}
+{{/if}}

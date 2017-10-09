@@ -1,0 +1,36 @@
+<div class="skills {{if (await shadowSkills) " shadowed" " open"}}">
+  <div>
+    {{#if (is-pending skillsToDisplay) }}
+      <div class="loading">
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+      </div>
+    {{else}}
+      <ul class="tags skills">
+        {{#each (await skillsToDisplay) as |skill|}}
+          <li>
+            {{#link-to "concepts.show" conceptScheme skill.id}}
+              {{await skill.defaultPrefLabel}}
+            {{/link-to}}
+            {{#if showAddSkills}}
+              <button type="button" name="button" class='delete' {{action 'deleteRelation' skill}}>
+              </button>
+            {{/if}}
+          </li>
+    {{else}}
+      <p class="msg msg--empty msg--no-preline">
+        There are no skills for this relation yet.
+      </p>
+        {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+  {{#if (await shadowSkills)}}
+    {{#if showSkillList}}
+      <div class="btn-toggle-more" {{action "toggleDetail"}} title= {{toggleTooltip}}>
+      </div>
+    {{/if}}
+  {{/if}}
+  {{#if showAddSkills}}
+    {{popup-component buttonId=popupButtonId conceptScheme=conceptScheme saveAllElements=(action 'saveAllElements') searchFilter=searchFilter concept=concept creationConceptOptions=creationConceptOptions transitionToCreate="transitionToCreate"}}
+  {{/if}}
+</div>

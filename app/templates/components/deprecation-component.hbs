@@ -1,0 +1,35 @@
+<div class="concept-deprecated">
+  <div class="message">
+    <span><strong>This concept is deprecated.</strong></span>
+    {{#if replacements}}
+      <span><strong>It is replaced with the following concept(s):</strong></span>
+    {{/if}}
+  </div>
+  <ul class="replacements">
+    {{#each replacements as |replacement|}}
+      <li>
+        {{#link-to "concepts.show" conceptScheme replacement.id}}
+          {{await replacement.label}}
+        {{/link-to}}
+
+        <button type="button" name="button" class="delete" {{action 'deleteRelation' (await replacement.label)}}></button>
+      </li>
+    {{/each}}
+  </ul>
+
+  {{popup-component conceptScheme=conceptScheme saveAllElements=(action 'saveAllElements') buttonText=buttonText buttonClasses="btn btn--small deprecation" concept=model transitionToCreate=(action 'transitionToCreate')}}
+
+  {{#if isResetable}}
+    <div class='message undo-depr'>
+      <span>Deprecation can be undone until it is published.</span>
+    </div>
+    <div class="action">
+      <button type="button" class='btn btn--small undo-deprecation' {{action 'confirmUndoDeprecation'}}>Undo deprecation</button>
+    </div>
+  {{/if}}
+  {{#if showConfirmationPopup}}
+    {{#confirmation-popup confirmAction='undoDeprecation' confirmButton='Undo deprecation' undoDeprecation=(action 'undoDeprecation') closeConfirmation=(action 'closeConfirmation')}}
+      <span>Do you want to undo deprecation?</span>
+    {{/confirmation-popup}}
+  {{/if}}
+</div>

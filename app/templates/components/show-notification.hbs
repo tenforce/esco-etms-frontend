@@ -1,0 +1,27 @@
+{{#if displayNotification}}
+  <div class="notification {{notification.purpose}}">
+    {{#if (eq notification.notificationType "message")}}
+      <div class="message">
+        {{notification.message}}
+      </div>
+      <div class="close" {{action 'closeNotification'}}></div>
+    {{else if (eq notification.notificationType "list")}}
+      <div class="message">
+        {{notification.message}}
+        <a href="" class="toggle-list {{if listClosed 'not pressed' 'pressed'}}" {{action "toggleList"}}>
+          {{notification.listButton}}
+        </a>
+      </div>
+      <div class="list {{if listClosed 'closed' 'open'}}">
+          {{#unless listClosed}}
+            <ul>
+              {{#each notification.list as |item|}}
+                  <li>{{item}}</li>
+              {{/each}}
+            </ul>
+          {{/unless}}
+      </div>
+      <div class="close" {{action 'closeNotification'}}></div>
+    {{/if}}
+  </div>
+{{/if}}

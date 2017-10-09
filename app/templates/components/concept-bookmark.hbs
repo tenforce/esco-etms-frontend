@@ -1,0 +1,7 @@
+<div class="concept-bookmark {{if (await isBookmarked) 'active'}}">
+  {{#if (await isBookmarked)}}
+    <button {{action 'removeBookmark'}} title='Remove from favourites'></button>
+  {{else}}
+    <button {{action 'addBookmark'}} title='Add to favourites'></button>
+  {{/if}}
+</div>

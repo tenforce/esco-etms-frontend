@@ -1,0 +1,10 @@
+{{show-notifications}}
+{{#if (not-eq controller.currentRouteName "sign-in")}}
+  {{nav-bar activateItem="activateItem"}}
+{{/if}}
+
+<div class="main-content">
+	{{outlet}}
+</div>
+
+{{ember-notify closeAfter=8000}}

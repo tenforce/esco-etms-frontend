@@ -1,0 +1,29 @@
+<div class="section__subtitle">
+  <h3>Narrower</h3>
+</div>
+
+<ul class="tags narrower">
+  {{#if (is-pending elements)}}
+    <i class="fa fa-circle-o-notch fa-spin"></i>
+  {{else}}
+    {{#each (await elements) as |item|}}
+        <li>
+          {{#link-to "concepts.show" conceptScheme item.id}}
+            {{#if (is-pending item.defaultPrefLabel)}}
+              <i class="fa fa-circle-o-notch fa-spin"></i>
+            {{else}}
+              {{#if item.defaultCode}}{{item.defaultCode}} - {{/if}}{{await item.defaultPrefLabel}}
+            {{/if}}
+          {{/link-to}}
+        </li>
+      {{else}}
+        <p class="msg msg--empty msg--no-preline">
+          This concept has no narrower concepts.
+        </p>
+    {{/each}}
+  {{/if}}
+</ul>
+{{#unless disableEditing}}
+  {{popup-component buttonId='HierarchyNarrower' conceptScheme=conceptScheme concept=concept saveAllElements=(action 'saveAllElements') disableCreate=disableCreate
+    searchFilter=searchFilter creationConceptOptions=creationConceptOptions presetBroader=true transitionToCreate="transitionToCreate"}}
+{{/unless}}

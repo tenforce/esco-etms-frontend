@@ -1,0 +1,41 @@
+<div class="header">
+    <h1>Create an official publication</h1>
+</div>
+<div class="body">
+  <div class="section">
+    <p>You are about to create an official publication. Marking a publication as
+        official will have the following effects on the ETMS platform:</p>
+        <ul>
+            <li>The concept status as it is present in the publication will be copied to the ETMS data.</li>
+            <li>For newly released concepts the concepts publication date will be set to the configured publication date.</li>
+            <li>Official publications can not be deleted.</li>
+        </ul>
+    </div>
+  {{#if errorMessage}}
+      <div class="feedback feedback--error">
+          <i class="fa fa-exclamation-triangle"></i> {{errorMessage}}
+      </div>
+  {{/if}}
+    <div class="section">
+        <div class="section__title">Name</div>
+        <div class="section__body">{{model.name}}</div>
+    </div>
+
+    <div class="section">
+        <div class="section__title">Publication date</div>
+        <div class="section__body">
+            <td>{{custom-format-date model.issued format="YYYY-MM-DD"}}</td>
+        </div>
+    </div>
+</div>
+<!-- /.body -->
+
+<div class="footer">
+    <div class="actions">
+        <button class="btn" {{action 'officialize'}} disabled="{{if running "disabled"}}">Mark as an official publication</button>
+        {{#if running}}
+                <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+        {{/if}}
+    </div>
+</div>
+<!-- /.footer -->

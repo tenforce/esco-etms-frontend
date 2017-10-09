@@ -1,0 +1,73 @@
+<div class="cpanel">
+  <div class="left">
+    <ul class="menu">
+      <li class="aet">
+        {{#link-to 'menu.profile' tagName="div" class="aet-node" }}Profile{{/link-to}}
+      </li>
+
+      {{#if allowedOnBookmarks}}
+        <li class="aet">
+          {{#link-to 'menu.bookmarks' tagName="li" class="aet-node" }}Favourites{{/link-to}}
+        </li>
+      {{/if}}
+
+      {{#if allowedOnNotifications}}
+        <li class="aet expandable">
+          <div class="{{if showNotificationSubmenu 'expanded' 'collapsed'}}"></div>
+          {{#link-to 'menu.notifications' 'list' tagName="div" class="aet-node" }}Notifications{{/link-to}}
+          {{#if showNotificationSubmenu}}
+            <ul class="sublist">
+              <li class="aet">
+                {{#link-to 'menu.notifications' 'list' tagName="div" class="aet-node" }}Current notifications{{/link-to}}
+              </li>
+              <li class="aet">
+                {{#link-to 'menu.notifications' 'create' tagName="div" class="aet-node" }}Create new{{/link-to}}
+              </li>
+            </ul>
+          {{/if}}
+        </li>
+      {{/if}}
+
+      {{#if allowedOnValidation}}
+        <li class="aet">
+          {{#link-to 'menu.validation' tagName="div" class="aet-node" }}Validate{{/link-to}}
+        </li>
+      {{/if}}
+
+      {{#if allowedOnDashboard}}
+        <li class="aet expandable">
+          <div class="{{if showDashboardSubmenu 'expanded' 'collapsed'}}"></div>
+          {{#link-to 'menu.dashboard' 'occupations' tagName="div" class="aet-node" }}KPI Dashboard{{/link-to}}
+          {{#if showDashboardSubmenu}}
+            <ul class="sublist">
+              <li class="aet">
+                {{#link-to 'menu.dashboard' 'occupations' tagName="div" class="aet-node" }}Occupations scheme{{/link-to}}
+              </li>
+              <li class="aet">
+                {{#link-to 'menu.dashboard' 'skills' tagName="div" class="aet-node" }}Skills scheme{{/link-to}}
+              </li>
+            </ul>
+          {{/if}}
+        </li>
+      {{/if}}
+
+      {{#if allowedOnPublish}}
+        <li class="aet">
+          {{#link-to 'menu.publications' tagName="div" class="aet-node" }}Publications{{/link-to}}
+          <ul class="sublist">
+            <li class="aet">
+              {{#link-to 'menu.create-publication' tagName="div" class="aet-node" }}Create new{{/link-to}}
+            </li>
+          </ul>
+        </li>
+      {{/if}}
+    </ul>
+
+  </div><!-- /.left -->
+
+  <div class="right">
+    <div class="content">
+      {{outlet}}
+    </div>
+  </div><!-- /.right -->
+</div><!-- /.cpanel -->

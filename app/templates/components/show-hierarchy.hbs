@@ -1,0 +1,11 @@
+{{#if (not presetBroader)}}
+  {{hierarchy-broader-element  concept=object pillar=(await conceptScheme) conceptScheme=structureId creationConceptOptions=creationConceptOptions disableEditing=disableEditingBroader saveAfterAdding=saveAfterAddingBroader disableCreate=disableCreate transitionToCreate="transitionToCreateBroader"}}
+{{/if}}
+{{#if showNarrower}}
+  {{hierarchy-narrower-element concept=object conceptScheme=(await conceptScheme) creationConceptOptions=creationConceptOptions disableEditing=disableEditingNarrower saveAfterAdding=saveAfterAddingNarrower disableCreate=disableCreate transitionToCreate="transitionToCreateNarrower"}}
+{{/if}}
+{{#if isHierarchyEmpty}}
+<p>
+  You can neither assign Broader nor Narrower to this concept.
+</p>
+{{/if}}

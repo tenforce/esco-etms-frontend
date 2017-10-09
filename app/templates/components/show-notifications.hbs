@@ -1,0 +1,11 @@
+{{#if displayNotifications}}
+  <div class="notifications">
+    {{#each notifications as |notification|}}
+      {{#if notification.id}}
+        {{#if (notificationExpirationChecker notification.expirationDate)}}
+          {{show-notification notification=notification closeNotification="closeNotification"}}
+        {{/if}}
+      {{/if}}
+    {{/each}}
+  </div>
+{{/if}}
