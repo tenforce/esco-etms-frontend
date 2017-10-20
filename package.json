@@ -48,7 +48,7 @@
     "ember-data-has-many-query": "0.0.2",
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-esco-concept-description": "https://github.com/tenforce/ember-esco-concept-description.git#v3.1.23",
-    "ember-esco-plugins": "https://github.com/tenforce/ember-esco-plugins.git#v3.0.27",
+    "ember-esco-plugins": "https://github.com/tenforce/ember-esco-plugins.git#v3.0.28",
     "ember-export-application-global": "^1.0.4",
     "ember-intl": "~2.15.1",
     "ember-keyboard-shortcuts": "https://github.com/asjongers/ember-keyboard-shortcuts.git#v0.3.6",
@@ -60,11 +60,11 @@
     "ember-power-select": "1.8.1",
     "ember-promise-helpers": "1.0.1",
     "ember-radio-button": "1.0.7",
-    "ember-search-bar": "https://git@github.com/tenforce/ember-search-bar.git#v0.3.0",
+    "ember-search-bar": "https://github.com/tenforce/ember-search-bar.git#v0.3.0",
     "ember-simple-auth": "1.0.1",
     "ember-tether": "^0.3.0",
     "ember-truth-helpers": "1.2.0",
-    "terms-manager": "https://git@github.com/tenforce/ember-terms-manager.git#v0.0.8",
-    "validation-addon": "https://git@github.com/tenforce/ember-validation-addon.git#v3.1.0"
+    "terms-manager": "https://github.com/tenforce/ember-terms-manager.git#v0.0.8",
+    "validation-addon": "https://github.com/tenforce/ember-validation-addon.git#v3.1.0"
   }
 }
