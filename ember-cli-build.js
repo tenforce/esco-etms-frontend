@@ -6,7 +6,7 @@ module.exports = function(defaults) {
   var app = new EmberApp(defaults, {
     // Add options here
     fingerprint: {
-      prepend: '/esco/etms/'
+      // prepend: '/esco/etms/'
     }
   });
 
