@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'etms-frontend',
     environment: environment,
-    baseURL: '/esco/etms',
+    baseURL: '/',
     locationType: 'auto',
     contentSecurityPolicy: {
       'default-src': "'none'",

@@ -5,9 +5,5 @@
 SignInRoute = Ember.Route.extend UnauthenticatedRouteMixin,
   session: Ember.inject.service('session')
 
-  model: ->
-    @get('session').authenticate('authenticator:ecas').then( =>
-      @transitionTo('concepts', env.etms.occupationScheme)
-    )
 
 `export default SignInRoute`

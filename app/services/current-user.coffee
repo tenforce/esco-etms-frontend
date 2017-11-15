@@ -9,9 +9,10 @@ CurrentUserService = Ember.Service.extend
     @ensureUser()
   sessionAuthenticated: ->
     @ensureUser()
+    @_super(arguments...)
   sessionInvalidated: ->
     @set 'user', null
-
+    @_super(arguments...)
   userInGroup: (groupName) ->
     valid= false
     @get('groups')?.forEach (group) ->

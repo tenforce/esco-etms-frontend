@@ -5,7 +5,7 @@
 IndexRoute = Ember.Route.extend AuthenticatedRouteMixin,
   session: Ember.inject.service('session')
   afterModel: (transition) ->
-    @_super(arguments)
+    @_super(arguments...)
     @transitionTo('concepts', env.etms.occupationScheme)
 
 `export default IndexRoute`

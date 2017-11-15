@@ -16,8 +16,6 @@ RUN bower --allow-root install
 ENV PATH=/app/node_modules/ember-cli/bin:$PATH
 
 ADD . /app/
-RUN ember build --prod >/dev/null
+# RUN ember build --prod >/dev/null
 
-EXPOSE 4200
-
-CMD sh -c "npm install -q && ember build --watch"
+CMD sh -c "npm install -q && ember build --prod"

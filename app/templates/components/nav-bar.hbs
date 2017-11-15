@@ -11,7 +11,9 @@
 <div class="right">
   <div class="dropdowns">
     <div class="notifications">
-      {{display-notifications user=user loadingPlaceholder=loadingPlaceholder handleClick="handleClick" targetAttachment='bottom left' attachment='top right'}}
+      {{#if session.isAuthenticated}}
+			      {{display-notifications user=user loadingPlaceholder=loadingPlaceholder handleClick="handleClick" targetAttachment='bottom left' attachment='top right'}}
+			{{/if}}
     </div>
     <div class="user-nav">
       <a {{action 'toggleMenu'}} class="user-nav-btn {{if menuClosed "closed"}}" title="View user settings">
@@ -35,7 +37,7 @@
           {{#if allowedOnPublish}}
             <span {{action 'closeMenu'}}>{{#link-to 'menu.publications' tagName="li"}}Publications{{/link-to}}</span>
           {{/if}}
-          <span class="logout-button">{{ecas-logout tagName="li"}}</span>
+          <span class="logout-button">{{mu-logout tagName="li"}}</span>
         {{else}}
           <span {{action 'closeMenu'}}>{{#link-to 'sign-in' tagName="li"}}Sign in{{/link-to}}</span>
         {{/if}}
