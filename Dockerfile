@@ -1,12 +1,13 @@
-FROM node:4
-LABEL authors="Cecile Tonglet <cecile.tonglet@tenforce.com"
+FROM madnificent/ember:2.14.0 as ember
 
-RUN npm -q set progress=false
-RUN npm install -q -g bower ember-cli
+MAINTAINER Esteban Sastre <esteban.sastre@tenforce.com>
+MAINTAINER Aad Versteden <madnificent@gmail.com>
 
-RUN mkdir /app
-WORKDIR /app
+COPY . /app
+RUN npm install && bower install
+RUN npm rebuild node-sass
+RUN ember build
 
-ENV PATH=/app/node_modules/ember-cli/bin:$PATH
-ENV GIT_DIR=/tmp
-CMD sh -c "npm install -q && bower --allow-root install && ember build --prod"
+FROM nginx:1
+RUN ln -s /usr/share/nginx/html /app
+COPY --from=ember /app/dist /app
